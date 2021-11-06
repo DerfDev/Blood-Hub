@@ -1,11 +1,10 @@
-repeat wait() until game:IsLoaded() == true
-
 if game.PlaceId == 155615604 then
 
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
     local Window = Library.CreateLib("Blood Hub | Prison Life", "BloodTheme")
     
     --Locals
+    
     local Main = Window:NewTab("Main")
     local MainSection = Main:NewSection("Main")
 
@@ -17,6 +16,10 @@ if game.PlaceId == 155615604 then
 
     local Teleports = Window:NewTab("Teleports")
     local TeleportSection = Teleports:NewSection("Teleports")
+
+    local Credits = Window:NewTab("Credits")
+    local CreditsSection = Credits:NewSection("Credits")
+
 
     --Main
 
@@ -58,6 +61,14 @@ if game.PlaceId == 155615604 then
 
  MainSection:NewButton("Reset","Force resets your character", function()
     game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer.Name)
+  end)
+MainSection:NewButton("BTools","Gives you a set of BTools", function()
+    local tool1 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
+    local tool2 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
+    local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	tool1.BinType = "Clone"
+    tool2.BinType = "Hammer"
+    tool3.BinType = "Grab"
 end)
 
     --Player
@@ -143,5 +154,11 @@ end)
     
     TeleportSection:NewButton("Gaurds Only", "Teleports you to the Guards only room",function()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(835.739, 101.491, 2312.04)
+    end)
+
+    CreditsSection:NewLabel("Scripting: DerfDev")
+    CreditsSection:NewLabel("Helper: pisipapi")
+    CreditsSection:NewButton("Copy Discord", "Copies our Discord link to your clipboard", function()
+        setclipboard(tostring('https://discord.gg/GNA5D8rps3'))
     end)
 end
