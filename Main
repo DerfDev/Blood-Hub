@@ -1,3 +1,3 @@
 if game.PlaceId == 155615604 then -- Prison Life
-     loadstring(game:HttpGet(('https://pastebin.com/TaRxPgpd'),true))()   
+     loadstring(game:HttpGet(('https://raw.githubusercontent.com/DerfDev/Blood-Hub/main/Prison%20Life'),true))()   
 end
