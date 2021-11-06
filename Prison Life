@@ -66,7 +66,7 @@ MainSection:NewButton("BTools","Gives you a set of BTools", function()
     local tool1 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
     local tool2 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
     local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-	tool1.BinType = "Clone"
+    tool1.BinType = "Clone"
     tool2.BinType = "Hammer"
     tool3.BinType = "Grab"
 end)
