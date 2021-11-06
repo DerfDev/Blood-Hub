@@ -1,0 +1,145 @@
+if game.PlaceId == 155615604 then
+
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Blood Hub | Prison Life", "BloodTheme")
+    
+    --Locals
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Main")
+
+    local Player = Window:NewTab("Player")
+    local PlayerSection = Player:NewSection("Player")
+
+    local Trolling = Window:NewTab("Trolling")
+    local TrollingSection = Trolling:NewSection("Trolling")
+
+    local Teleports = Window:NewTab("Teleports")
+    local TeleportSection = Teleports:NewSection("Teleports")
+
+    --Main
+
+    MainSection:NewDropdown("Change Team", "Changes your current team",{"Criminal", "Neutral", "Gaurd", "Inmate"},function(v)
+        if v == "Criminal" then
+            local weld02 = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-919.958, 95.327, 2138.189)
+    		wait(1)
+    		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(weld02)
+        elseif v == "Inmate" then
+            game.Workspace.Remote.TeamEvent:FireServer("Bright orange")
+        elseif v == "Gaurd" then
+            game.Workspace.Remote.TeamEvent:FireServer("Bright blue")
+        elseif v == "Neutral" then
+            game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+        end
+    end)
+
+    MainSection:NewButton("Give All Items","Gives all the items to your player",function()
+        for i,v in pairs(game.Workspace.Prison_ITEMS.single:GetChildren()) do
+            if v:FindFirstChild("ITEMPICKUP") then
+                game.Workspace.Remote.ItemHandler:InvokeServer(v.ITEMPICKUP)
+            end
+        end
+        
+        for i,v in pairs(game.Workspace.Prison_ITEMS.giver:GetChildren()) do
+            if v:FindFirstChild("ITEMPICKUP") then
+                game.Workspace.Remote.ItemHandler:InvokeServer(v.ITEMPICKUP)
+            end
+        end
+    end)
+    MainSection:NewButton("Anti-Taze", "Makes you uneffected when tazed", function()
+   game.Players.LocalPlayer.Character.ClientInputHandler.Disabled = true
+   game.Players.LocalPlayer.CharacterAdded:connect(function()
+   game.Workspace:WaitForChild(game.Players.LocalPlayer.Name)
+   game.Players.LocalPlayer.Character.ClientInputHandler.Disabled = true
+   end)
+ end)
+
+ MainSection:NewButton("Reset","Force resets your character", function()
+    game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer.Name)
+end)
+
+    --Player
+
+    PlayerSection:NewSlider("Walk Speed", "Changes the player walk speed", 500, 16, function(s)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+    end)
+
+    PlayerSection:NewSlider("Jump Power", "Changes the player jump power", 350, 50, function(j)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
+    end)
+
+    PlayerSection:NewSlider("Hip Height", "Changes the player hip height", 50, 0, function(h)
+        game.Players.LocalPlayer.Character.Humanoid.HipHeight = h
+    end)
+
+    --Trolling
+
+    TrollingSection:NewButton("Naked", "No clothes until you reset",function()
+        for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+    		if v:IsA("Clothing") or v:IsA("ShirtGraphic") then
+    			v:Destroy()
+    		end
+    	end
+    end)
+
+    TrollingSection:NewTextBox("Arrest Player", "Arrest the stated player", function(txt)
+        if txt == "all" then
+            for i,v in pairs(game.Teams.Criminals:GetPlayers()) do
+                if v ~= game.Players.LocalPlayer then
+                    i = 0
+                    repeat wait()
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+                        game.Workspace.Remote.arrest:InvokeServer(v.Character.HumanoidRootPart)
+                        i = i + 1
+                    until i == 10
+                end
+            end
+        else
+        	local plr = findplayer(txt)
+            if plr then
+                local i = 0
+                repeat wait()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
+                    game.Workspace.Remote.arrest:InvokeServer(plr.Character.HumanoidRootPart)
+                    i = i + 1
+                until i == 10
+            end
+        end
+    end)
+
+    --Teleports
+
+
+
+    TeleportSection:NewButton("Criminal Base", "Teleports you to the Criminal Base",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-891.105, 95.5991, 2056.7)
+    end)
+    
+    TeleportSection:NewButton("Entrance Gate", "Teleports you to the Entrance Gate",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(500.703, 99.4857, 2216.35)
+    end)
+    
+    TeleportSection:NewButton("Entrance", "Teleports you to the Entrance",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(656.704, 101.489, 2272.54)
+    end)
+    
+    TeleportSection:NewButton("Yard", "Teleports you to the Yard",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(820.699, 101.457, 2380.45)
+    end)
+    
+    TeleportSection:NewButton("Hallway", "Teleports you to the Hallway",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(859.539, 101.47, 2361.49)
+    end)
+    
+    TeleportSection:NewButton("Cell Block", "Teleports you to the Cell Block",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(917.056, 101.49, 2440.01)
+    end)
+    
+    TeleportSection:NewButton("Cafeteria", "Teleports you to the Cafeteria",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(916.163, 101.481, 2345.52)
+    end)
+    
+    TeleportSection:NewButton("Gaurds Only", "Teleports you to the Guards only room",function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(835.739, 101.491, 2312.04)
+    end)
+end
