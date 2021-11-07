@@ -30,7 +30,7 @@ if game.PlaceId == 155615604 then
     mouse = game.Players.LocalPlayer:GetMouse()
     punching = false
     cooldown = false
-    
+     
     function punch()
     cooldown = true
     local part = Instance.new("Part", game.Players.LocalPlayer.Character)
