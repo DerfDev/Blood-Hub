@@ -1,5 +1,7 @@
+if game.PlaceId == 155615604 then
+
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("Blood Hub", "BloodTheme")
+    local Window = Library.CreateLib("Blood Hub | Prison Life", "BloodTheme")
     
     --Locals
     
@@ -20,12 +22,12 @@
     getgenv().noclip = false
     local flying = false
 
+
     --Main
 
- MainSection:NewButton("Reset","Force resets your character", function()
-    game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer.Name)
-  end)
-MainSection:NewButton("BTools","Gives you a set of BTools", function()
+    
+
+    MainSection:NewButton("BTools","Gives you a set of BTools", function()
     local tool1 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
     local tool2 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
     local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
@@ -34,9 +36,17 @@ MainSection:NewButton("BTools","Gives you a set of BTools", function()
     tool3.BinType = "Grab"
 end)
 
+    MainSection:NewButton("Infinite Yield", "Loads Infinite Yield to your game", function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end)
+
+    MainSection:NewButton("Reset","Force resets your character", function()
+    game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer.Name)
+  end)
+
     --Player
 
-    PlayerSection:NewButton("Flight (p)","Allows you to fly around the map",function()
+    PlayerSection:NewButton("Flight (P)","Allows you to fly around the map",function()
         repeat wait()
         until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Torso") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
         local mouse = game.Players.LocalPlayer:GetMouse()
@@ -125,7 +135,6 @@ end)
    PlayerSection:NewSlider("Hip Height", "Changes the player hip height", 50, 0, function(h)
         game.Players.LocalPlayer.Character.Humanoid.HipHeight = h
     end)
-
     PlayerSection:NewSlider("Jump Power", "Changes the player jump power", 350, 50, function(j)
         game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
     end)
@@ -158,13 +167,6 @@ end)
     end)
     
     --Makes some features work
-game:GetService("RunService").RenderStepped:Connect(function()
-        if game.Players.LocalPlayer.Character.Humanoid.Health == 0 and getgenv().godmode then
-            local pos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-            game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer.Name)  
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
-        end
-end)
 
         if getgenv().noclip then
             if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
