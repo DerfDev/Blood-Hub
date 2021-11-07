@@ -129,6 +129,9 @@ end)
     end)
 
     
+    MainSection:NewButton("Infinite Yield", "Loads Infinite Yield to your game", function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end)
 
     MainSection:NewButton("No Doors","Removes All Doors",function()
         game.Workspace.Doors:Destroy()
@@ -165,7 +168,7 @@ end)
         local deb = true
         local ctrl = {f = 0, b = 0, l = 0, r = 0}
         local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-        local maxspeed = 50
+        local maxspeed = 25
         local speed = 0
         
         function Fly()
@@ -338,6 +341,10 @@ end)
     CreditsSection:NewLabel("Helper: PisiPapi#0948")
     CreditsSection:NewButton("Copy Discord", "Copies our Discord link to your clipboard", function()
         setclipboard(tostring('https://discord.gg/GNA5D8rps3'))
+    end)
+
+    Credits:NewKeybind("Toggle UI", "Toggles the UI", Enum.KeyCode.P, function()
+        Library:ToggleUI()
     end)
     
     --Makes some features work
