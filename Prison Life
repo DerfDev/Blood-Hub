@@ -30,6 +30,12 @@ if game.PlaceId == 155615604 then
     mouse = game.Players.LocalPlayer:GetMouse()
     punching = false
     cooldown = false
+    getgenv().changedwalkspeed = false
+    getgenv().changedjumppower = false
+    getgenv().changedhipheight = false
+    getgenv().walkspeed = 0
+    getgenv().jumppower = 0
+    getgenv().hipheight = 0
      
     function punch()
     cooldown = true
@@ -73,6 +79,7 @@ if game.PlaceId == 155615604 then
 
 
     --Main
+
     MainSection:NewButton("Anti-Taze", "Makes you uneffected when tazed", function()
     game.Players.LocalPlayer.Character.ClientInputHandler.Disabled = true
     game.Players.LocalPlayer.CharacterAdded:connect(function()
@@ -80,6 +87,16 @@ if game.PlaceId == 155615604 then
     game.Players.LocalPlayer.Character.ClientInputHandler.Disabled = true
    end)
 end)
+
+MainSection:NewButton("BTools","Gives you a set of BTools", function()
+    local tool1 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
+    local tool2 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
+    local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	tool1.BinType = "Clone"
+    tool2.BinType = "Hammer"
+    tool3.BinType = "Grab"
+end)
+
     MainSection:NewDropdown("Change Team", "Changes your current team",{"Criminal", "Neutral", "Gaurd", "Inmate"},function(v)
         if v == "Criminal" then
             local weld02 = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
@@ -108,12 +125,12 @@ end)
         end
     end)
 
-    MainSection:NewDropdown("Gun Mod", "Makes the gun op", {"M9", "Remington 870", "AK-47"}, function(v)
+    MainSection:NewDropdown("Gun Mod", "Makes the gun op", {"M9", "Remington 870", "AK-47"}, function(m)
         local module = nil
-        if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v) then
-            module = require(game:GetService("Players").LocalPlayer.Backpack[v].GunStates)
-        elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(v) then
-            module = require(game:GetService("Players").LocalPlayer.Character[v].GunStates)
+        if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(m) then
+            module = require(game:GetService("Players").LocalPlayer.Backpack[m].GunStates)
+        elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(m) then
+            module = require(game:GetService("Players").LocalPlayer.Character[m].GunStates)
         end
         if module ~= nil then
             module["MaxAmmo"] = math.huge
@@ -125,6 +142,9 @@ end)
             module["Bullets"] = 8
             module["ReloadTime"] = 0.000001
             module["AutoFire"] = true
+            print('Successfully modded the gun \'' ..m.. '\'')
+        else
+            print('Please have the gun you want to mod in your inventory first')
         end
     end)
 
@@ -147,18 +167,19 @@ end)
  MainSection:NewButton("Reset","Force resets your character", function()
     game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer.Name)
   end)
-MainSection:NewButton("BTools","Gives you a set of BTools", function()
-    local tool1 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
-    local tool2 = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
-    local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-	tool1.BinType = "Clone"
-    tool2.BinType = "Hammer"
-    tool3.BinType = "Grab"
+
+  MainSection:NewButton("Server Hop", "Makes the player join a new server",function()
+    local Servers = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
+    for i,v in pairs(Servers.data) do
+        if v.playing ~= v.maxPlayers then
+            game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, v.id)
+        end
+    end
 end)
 
     --Player
 
-    PlayerSection:NewButton("Flight (E)","Allows you to fly around the map",function()
+    PlayerSection:NewButton("Flight (K)","Allows you to fly around the map",function()
         repeat wait()
         until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Torso") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
         local mouse = game.Players.LocalPlayer:GetMouse()
@@ -210,7 +231,7 @@ end)
             plr.Character.Humanoid.PlatformStand = false
             end
             mouse.KeyDown:connect(function(key)
-            if key:lower() == "e" then
+            if key:lower() == "k" then
             if flying then flying = false
             else
             flying = true
@@ -244,9 +265,12 @@ end)
         getgenv().godmode = state
    end)
 
-   PlayerSection:NewSlider("Hip Height", "Changes the player hip height", 50, 0, function(h)
+   PlayerSection:NewTextBox("HipHeight", "Sets your HipHeight", function(h)
+    getgenv().changedhipheight = true
+    if tonumber(h) then
         game.Players.LocalPlayer.Character.Humanoid.HipHeight = h
-    end)
+    end
+end)
 
     PlayerSection:NewToggle("Inf Stamina","Infinite Stamina",function(state)
         getgenv().infstamina = state
@@ -274,20 +298,26 @@ end)
             end
         end
 end)
-    PlayerSection:NewSlider("Jump Power", "Changes the player jump power", 350, 50, function(j)
+PlayerSection:NewTextBox("Jump Power", "Sets your JumpPower" ,function(j)
+    getgenv().changedjumppower = true
+    if tonumber(j) then
         game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
-    end)
+    end
+end)
 
-    PlayerSection:NewToggle("Noclip","Allows you to walk through wall",function(state)
+    PlayerSection:NewToggle("Noclip", "Allows you to walk through wall", function(state)
         getgenv().noclip = state
     end)
 
-    PlayerSection:NewToggle("Super Punch","Kills anyone with one punch", function(state)
+    PlayerSection:NewToggle("Super Punch", "Kills anyone with one punch", function(state)
         getgenv().onepunch = state
     end)
 
-    PlayerSection:NewSlider("Walk Speed", "Changes the player walk speed", 500, 16, function(s)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+    PlayerSection:NewTextBox("WalkSpeed", "Sets your WalkSpeed", function(s)
+        getgenv().changedwalkspeed = true
+        if tonumber(s) then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+        end
     end)
 
     --Trolling
@@ -341,10 +371,11 @@ end)
     CreditsSection:NewLabel("Helper: PisiPapi#0948")
     CreditsSection:NewButton("Copy Discord", "Copies our Discord link to your clipboard", function()
         setclipboard(tostring('https://discord.gg/GNA5D8rps3'))
+        print('Copied!')
     end)
-
-    Credits:NewKeybind("Toggle UI", "Toggles the UI", Enum.KeyCode.P, function()
-        Library:ToggleUI()
+    CreditsSection:NewButton("Copy GitHub", "Copies my GitHub link to your clipboard", function()
+        setclipboard(tostring('https://github.com/DerfDev'))
+        print('Copied!')
     end)
     
     --Makes some features work
@@ -361,4 +392,7 @@ end)
                 game.Players.LocalPlayer.Character:FindFirstChild("Humanoid"):ChangeState(11)
         end
     end
+    print('Successfully loaded')
+else
+    print('Error')
 end
