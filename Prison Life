@@ -322,6 +322,22 @@ end)
 
     --Trolling
 
+    TrollingSection:NewToggle("Lag Server (Use Remington 870)", "Lags/Crashed the server your in", function(state)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(825.859009, 99.9899826, 2254.7981, 0.998627067, 5.63668556e-10, -0.0523826852, -3.04493808e-09, 1, -4.72883173e-08, 0.0523826852, 4.73828976e-08, 0.998627067)
+    a = game.Players.LocalPlayer.Backpack:WaitForChild("Remington 870")
+    b = require(a.GunStates)
+
+    b.AutoFire = true
+    b.Spread = math.huge
+    b.MaxAmmo = math.huge
+    b.StoredAmmo = math.huge
+    b.CurrentAmmo = math.huge
+    b.FireRate = 0
+    b.Bullets = 75
+
+a.Parent = game.Players.LocalPlayer.Character
+    end)
+
     TrollingSection:NewButton("Naked", "No clothes until you reset",function()
         for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
     		if v:IsA("Clothing") or v:IsA("ShirtGraphic") then
