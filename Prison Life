@@ -21,6 +21,7 @@ if game.PlaceId == 155615604 then
     local CreditsSection = Credits:NewSection("Credits")
 
     --Makes some features work
+
     getgenv().godmode = false
     getgenv().noclip = false
     getgenv().onepunch = false
@@ -76,7 +77,6 @@ if game.PlaceId == 155615604 then
     end
     end
     end)
-
 
     --Main
 
