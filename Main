@@ -1,3 +1,7 @@
 if game.PlaceId == 155615604 then --Prison Life
-     loadstring(game:HttpGet(('https://raw.githubusercontent.com/DerfDev/Blood-Hub/main/Prison%20Life'),true))()   
+     loadstring(game:HttpGet(('https://raw.githubusercontent.com/DerfDev/Blood-Hub/main/Prison%20Life'),true))()
+     
+else
+    
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/DerfDev/Blood-Hub/main/Unsupported%20Games'),true))()
 end
